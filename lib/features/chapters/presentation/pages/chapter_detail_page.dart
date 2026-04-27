@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/services/audio_service.dart';
+import '../../../../core/services/bookmarks_service.dart';
 import '../../../../core/services/favorites_service.dart';
 import '../../../verse/presentation/pages/verse_detail_page.dart';
 import '../../../verse/presentation/widgets/verse_card.dart';
@@ -19,11 +21,24 @@ class ChapterDetailPage extends StatefulWidget {
 
 class _ChapterDetailPageState extends State<ChapterDetailPage> {
   final FavoritesService _favoritesService = FavoritesService.instance;
+  final BookmarksService _bookmarksService = BookmarksService.instance;
   final AudioService _audioService = AudioService.instance;
 
   @override
   Widget build(BuildContext context) {
     final verses = ChapterModel.sampleVersesForChapter(widget.chapterNum);
+    final chapterInfo = <String, String>{
+      'num': widget.chapter['num'] ?? widget.chapterNum.toString(),
+      'title': widget.chapter['title'] ?? '',
+      'ahirani': widget.chapter['ahirani'] ?? '',
+      'summary': widget.chapter['summary'] ?? '',
+      'sanskrit': widget.chapter['title'] ?? '',
+      'meaning': widget.chapter['summary'] ?? '',
+    };
+    final isBookmarked = _bookmarksService.isBookmarked(
+      chapterNum: widget.chapterNum,
+      verseNum: 0,
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xFF1A0A00),
@@ -34,8 +49,44 @@ class _ChapterDetailPageState extends State<ChapterDetailPage> {
           backgroundColor: const Color(0xFF2D1200),
           leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFFFD700)), onPressed: () => Navigator.pop(context)),
           actions: [
-            IconButton(icon: const Icon(Icons.bookmark_border, color: Color(0xFFFFD700)), onPressed: () {}),
-            IconButton(icon: const Icon(Icons.share_outlined, color: Color(0xFFFFD700)), onPressed: () {}),
+            IconButton(
+              icon: Icon(
+                isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                color: const Color(0xFFFFD700),
+              ),
+              onPressed: () {
+                final isNowBookmarked = _bookmarksService.toggleBookmark(
+                  chapterNum: widget.chapterNum,
+                  verseNum: 0,
+                  verse: chapterInfo,
+                );
+                setState(() {});
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      isNowBookmarked
+                          ? 'Chapter bookmarked'
+                          : 'Chapter bookmark removed',
+                    ),
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.share_outlined, color: Color(0xFFFFD700)),
+              onPressed: () {
+                final text = '''
+भगवद्गीता - अध्याय ${widget.chapterNum}
+
+${widget.chapter['title'] ?? ''}
+${widget.chapter['ahirani'] ?? ''}
+
+सारांश:
+${widget.chapter['summary'] ?? ''}
+''';
+                SharePlus.instance.share(ShareParams(text: text.trim()));
+              },
+            ),
           ],
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
