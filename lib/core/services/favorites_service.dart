@@ -5,7 +5,7 @@ import 'local_storage.dart';
 
 class FavoritesService extends ChangeNotifier {
   FavoritesService._() {
-    _favorites = LocalStorageService.instance.getFavorites();
+    _favorites = List<FavoriteVerse>.of(LocalStorageService.instance.getFavorites());
   }
 
   static final FavoritesService instance = FavoritesService._();

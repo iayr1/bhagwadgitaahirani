@@ -5,7 +5,7 @@ import 'local_storage.dart';
 
 class BookmarksService extends ChangeNotifier {
   BookmarksService._() {
-    _bookmarks = LocalStorageService.instance.getBookmarks();
+    _bookmarks = List<FavoriteVerse>.of(LocalStorageService.instance.getBookmarks());
   }
 
   static final BookmarksService instance = BookmarksService._();
