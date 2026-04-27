@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="bhagwadgita"
+        android:label="Bhagwad Gita"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <!-- Google AdMob App ID -->
