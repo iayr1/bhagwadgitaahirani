@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/widgets/banner_ad_widget.dart';
+import '../../bookmarks/presentation/bookmarks_page.dart';
 import '../../chapters/presentation/pages/chapters_page.dart';
 import '../../daily_verse/presentation/daily_verse_page.dart';
 import '../../favorites/presentation/favorites_page.dart';
-import '../../search/presentation/search_page.dart';
 import 'widgets/bottom_nav.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ChaptersPage(),
     DailyVersePage(),
     FavoritesPage(),
-    SearchPage(),
+    BookmarksPage(),
   ];
 
   @override
@@ -35,8 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Reusable banner ad pinned above bottom navigation.
-          // This keeps both ad and navigation visible without overlap.
           const BannerAdWidget(adUnitId: _homeBannerAdUnitId),
           HomeBottomNav(
             currentIndex: _selectedIndex,

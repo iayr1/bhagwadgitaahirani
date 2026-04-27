@@ -6,6 +6,7 @@ class LocalStorageService {
   static final LocalStorageService instance = LocalStorageService._();
 
   final List<FavoriteVerse> _favorites = <FavoriteVerse>[];
+  final List<FavoriteVerse> _bookmarks = <FavoriteVerse>[];
 
   List<FavoriteVerse> getFavorites() => List<FavoriteVerse>.unmodifiable(_favorites);
 
@@ -13,5 +14,13 @@ class LocalStorageService {
     _favorites
       ..clear()
       ..addAll(favorites);
+  }
+
+  List<FavoriteVerse> getBookmarks() => List<FavoriteVerse>.unmodifiable(_bookmarks);
+
+  void saveBookmarks(List<FavoriteVerse> bookmarks) {
+    _bookmarks
+      ..clear()
+      ..addAll(bookmarks);
   }
 }
