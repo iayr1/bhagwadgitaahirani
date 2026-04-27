@@ -66,12 +66,21 @@ class _VerseDetailPageState extends State<VerseDetailPage> {
               color: isFavorite ? Colors.red : const Color(0xFFFFD700),
             ),
             onPressed: () {
-              _favoritesService.toggleFavorite(
+              final isNowFavorite = _favoritesService.toggleFavorite(
                 chapterNum: widget.chapterNum,
                 verseNum: widget.verseNum,
                 verse: widget.verse,
               );
               setState(() {});
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    isNowFavorite
+                        ? 'Added to favorites'
+                        : 'Removed from favorites',
+                  ),
+                ),
+              );
             },
           ),
           IconButton(
@@ -80,12 +89,21 @@ class _VerseDetailPageState extends State<VerseDetailPage> {
               color: const Color(0xFFFFD700),
             ),
             onPressed: () {
-              _bookmarksService.toggleBookmark(
+              final isNowBookmarked = _bookmarksService.toggleBookmark(
                 chapterNum: widget.chapterNum,
                 verseNum: widget.verseNum,
                 verse: widget.verse,
               );
               setState(() {});
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    isNowBookmarked
+                        ? 'Added to bookmarks'
+                        : 'Removed from bookmarks',
+                  ),
+                ),
+              );
             },
           ),
           IconButton(

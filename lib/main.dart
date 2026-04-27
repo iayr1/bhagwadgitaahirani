@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'core/config/routes.dart';
 import 'core/config/theme.dart';
+import 'core/services/local_storage.dart';
 import 'features/splash/presentation/splash_screen.dart';
 
 Future<void> main() async {
@@ -12,6 +13,7 @@ Future<void> main() async {
 
   // Initializes the Google Mobile Ads SDK at app startup.
   await MobileAds.instance.initialize();
+  await LocalStorageService.instance.initialize();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
