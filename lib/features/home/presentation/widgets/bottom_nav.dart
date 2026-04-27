@@ -4,7 +4,11 @@ class HomeBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  const HomeBottomNav({super.key, required this.currentIndex, required this.onTap});
+  const HomeBottomNav({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +30,27 @@ class HomeBottomNav extends StatelessWidget {
         unselectedItemColor: const Color(0xFF8B5E3C),
         elevation: 0,
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+        selectedLabelStyle: const TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+        ),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.menu_book_rounded), label: 'अध्याय'),
-          BottomNavigationBarItem(icon: Icon(Icons.wb_sunny_rounded), label: 'आजचा श्लोक'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_rounded), label: 'आवडते'),
-          BottomNavigationBarItem(icon: Icon(Icons.search_rounded), label: 'शोधा'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book_rounded),
+            label: 'अध्याय',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.wb_sunny_rounded),
+            label: 'आजचा श्लोक',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_rounded),
+            label: 'आवडते',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_rounded),
+            label: 'बुकमार्क',
+          ),
         ],
       ),
     );
