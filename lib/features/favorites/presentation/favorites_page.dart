@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/services/audio_service.dart';
 import '../../../core/services/favorites_service.dart';
+import '../../chapters/data/models/chapter_model.dart';
+import '../../verse/presentation/pages/verse_detail_page.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
@@ -40,6 +42,20 @@ class FavoritesPage extends StatelessWidget {
                 color: const Color(0xFF2D1200),
                 margin: const EdgeInsets.only(bottom: 10),
                 child: ListTile(
+                  onTap: () {
+                    final color = ChapterModel.chapterColors[(item.chapterNum - 1) % ChapterModel.chapterColors.length];
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => VerseDetailPage(
+                          verse: item.verse,
+                          chapterNum: item.chapterNum,
+                          verseNum: item.verseNum,
+                          color: color,
+                        ),
+                      ),
+                    );
+                  },
                   title: Text(
                     'अध्याय ${item.chapterNum} • श्लोक ${item.verseNum}',
                     style: const TextStyle(color: Color(0xFFFFD700), fontWeight: FontWeight.bold),
