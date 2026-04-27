@@ -4,8 +4,19 @@ class VerseCard extends StatelessWidget {
   final Map<String, String> verse;
   final Color color;
   final VoidCallback onTap;
+  final VoidCallback onPlay;
+  final VoidCallback onLike;
+  final bool isFavorite;
 
-  const VerseCard({super.key, required this.verse, required this.color, required this.onTap});
+  const VerseCard({
+    super.key,
+    required this.verse,
+    required this.color,
+    required this.onTap,
+    required this.onPlay,
+    required this.onLike,
+    required this.isFavorite,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +43,16 @@ class VerseCard extends StatelessWidget {
                 child: Text('श्लोक ${verse['num']}', style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.bold)),
               ),
               const Spacer(),
-              Icon(Icons.play_circle_outline, color: color, size: 20),
-              const SizedBox(width: 8),
-              Icon(Icons.favorite_border, color: color.withOpacity(0.6), size: 20),
+              IconButton(
+                onPressed: onPlay,
+                icon: Icon(Icons.play_circle_outline, color: color, size: 22),
+                splashRadius: 20,
+              ),
+              IconButton(
+                onPressed: onLike,
+                icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, color: isFavorite ? Colors.redAccent : color.withOpacity(0.7), size: 22),
+                splashRadius: 20,
+              ),
             ]),
             const SizedBox(height: 12),
             Text(verse['sanskrit']!, style: const TextStyle(color: Color(0xFFFFD700), fontSize: 14, height: 1.6, fontStyle: FontStyle.italic)),

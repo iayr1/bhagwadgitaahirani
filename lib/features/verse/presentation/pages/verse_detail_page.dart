@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/services/audio_service.dart';
+import '../../../../core/services/favorites_service.dart';
+
 class VerseDetailPage extends StatefulWidget {
   final Map<String, String> verse;
   final int chapterNum;
@@ -13,12 +16,16 @@ class VerseDetailPage extends StatefulWidget {
 }
 
 class _VerseDetailPageState extends State<VerseDetailPage> {
-  bool _isFavorite = false;
   bool _showTransliteration = true;
   bool _showMeaning = true;
 
+  final FavoritesService _favoritesService = FavoritesService.instance;
+  final AudioService _audioService = AudioService.instance;
+
   @override
   Widget build(BuildContext context) {
+    final isFavorite = _favoritesService.isFavorite(chapterNum: widget.chapterNum, verseNum: widget.verseNum);
+
     return Scaffold(
       backgroundColor: const Color(0xFF1A0A00),
       appBar: AppBar(
@@ -26,7 +33,21 @@ class _VerseDetailPageState extends State<VerseDetailPage> {
         leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFFFD700)), onPressed: () => Navigator.pop(context)),
         title: Text('अध्याय ${widget.chapterNum} • श्लोक ${widget.verseNum}', style: const TextStyle(color: Color(0xFFFFD700), fontSize: 16)),
         actions: [
-          IconButton(icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border, color: _isFavorite ? Colors.red : const Color(0xFFFFD700)), onPressed: () => setState(() => _isFavorite = !_isFavorite)),
+          IconButton(
+            icon: const Icon(Icons.play_circle_outline, color: Color(0xFFFFD700)),
+            onPressed: () => _audioService.speakSanskritVerse(widget.verse['sanskrit'] ?? ''),
+          ),
+          IconButton(
+            icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, color: isFavorite ? Colors.red : const Color(0xFFFFD700)),
+            onPressed: () {
+              _favoritesService.toggleFavorite(
+                chapterNum: widget.chapterNum,
+                verseNum: widget.verseNum,
+                verse: widget.verse,
+              );
+              setState(() {});
+            },
+          ),
           IconButton(icon: const Icon(Icons.share_outlined, color: Color(0xFFFFD700)), onPressed: () {}),
         ],
       ),
