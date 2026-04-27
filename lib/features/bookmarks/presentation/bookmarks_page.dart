@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/services/bookmarks_service.dart';
 import '../../../core/services/audio_service.dart';
+import '../../../core/services/bookmarks_service.dart';
 import '../../chapters/data/models/chapter_model.dart';
+import '../../chapters/presentation/pages/chapter_detail_page.dart';
 import '../../verse/presentation/pages/verse_detail_page.dart';
 
 class BookmarksPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class BookmarksPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF2D1200),
         title: const Text(
-          'बुकमार्क श्लोक',
+          'बुकमार्क',
           style: TextStyle(
             color: Color(0xFFFFD700),
             fontWeight: FontWeight.bold,
@@ -33,7 +34,7 @@ class BookmarksPage extends StatelessWidget {
           if (bookmarks.isEmpty) {
             return const Center(
               child: Text(
-                'अजून कुठलाही श्लोक बुकमार्क केलेला नाही.',
+                'अजून कुठलाही बुकमार्क केलेला नाही.',
                 style: TextStyle(color: Color(0xFFAA8855), fontSize: 14),
               ),
             );
@@ -44,13 +45,29 @@ class BookmarksPage extends StatelessWidget {
             itemCount: bookmarks.length,
             itemBuilder: (context, index) {
               final item = bookmarks[index];
+              final color = ChapterModel.chapterColors[
+                  (item.chapterNum - 1) % ChapterModel.chapterColors.length];
+              final isChapterBookmark = item.verseNum == 0;
+
               return Card(
                 color: const Color(0xFF2D1200),
                 margin: const EdgeInsets.only(bottom: 10),
                 child: ListTile(
                   onTap: () {
-                    final color = ChapterModel.chapterColors[
-                        (item.chapterNum - 1) % ChapterModel.chapterColors.length];
+                    if (isChapterBookmark) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChapterDetailPage(
+                            chapterNum: item.chapterNum,
+                            chapter: item.verse,
+                            color: color,
+                          ),
+                        ),
+                      );
+                      return;
+                    }
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -64,7 +81,9 @@ class BookmarksPage extends StatelessWidget {
                     );
                   },
                   title: Text(
-                    'अध्याय ${item.chapterNum} • श्लोक ${item.verseNum}',
+                    isChapterBookmark
+                        ? 'अध्याय ${item.chapterNum} • पूर्ण अध्याय'
+                        : 'अध्याय ${item.chapterNum} • श्लोक ${item.verseNum}',
                     style: const TextStyle(
                       color: Color(0xFFFFD700),
                       fontWeight: FontWeight.bold,
@@ -73,24 +92,29 @@ class BookmarksPage extends StatelessWidget {
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      item.verse['sanskrit'] ?? '',
+                      isChapterBookmark
+                          ? (item.verse['summary'] ?? '')
+                          : (item.verse['sanskrit'] ?? ''),
                       style: const TextStyle(
                         color: Color(0xFFDDC08A),
                         height: 1.4,
                       ),
+                      maxLines: isChapterBookmark ? 3 : 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.play_circle_outline,
-                          color: Color(0xFFFFD700),
+                      if (!isChapterBookmark)
+                        IconButton(
+                          icon: const Icon(
+                            Icons.play_circle_outline,
+                            color: Color(0xFFFFD700),
+                          ),
+                          onPressed: () => audioService
+                              .speakSanskritVerse(item.verse['sanskrit'] ?? ''),
                         ),
-                        onPressed: () => audioService
-                            .speakSanskritVerse(item.verse['sanskrit'] ?? ''),
-                      ),
                       IconButton(
                         icon: const Icon(
                           Icons.bookmark,
