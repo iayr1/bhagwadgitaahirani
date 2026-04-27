@@ -13,6 +13,8 @@ class ChapterDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final verses = ChapterModel.sampleVersesForChapter(chapterNum);
+
     return Scaffold(
       backgroundColor: const Color(0xFF1A0A00),
       body: CustomScrollView(slivers: [
@@ -56,18 +58,18 @@ class ChapterDetailPage extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) => VerseCard(
-                verse: ChapterModel.sampleVerses[index % ChapterModel.sampleVerses.length],
+                verse: verses[index],
                 color: color,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => VerseDetailPage(
-                    verse: ChapterModel.sampleVerses[index % ChapterModel.sampleVerses.length],
+                    verse: verses[index],
                     chapterNum: chapterNum,
                     verseNum: index + 1,
                     color: color,
                   )));
                 },
               ),
-              childCount: 8,
+              childCount: verses.length,
             ),
           ),
         ),
