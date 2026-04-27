@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'core/config/routes.dart';
 import 'core/config/theme.dart';
 import 'features/splash/presentation/splash_screen.dart';
 
-void main() {
+Future<void> main() async {
+  // Ensures plugin services (including ads) are initialized before app start.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initializes the Google Mobile Ads SDK at app startup.
+  await MobileAds.instance.initialize();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
