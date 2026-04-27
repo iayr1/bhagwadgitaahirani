@@ -1,4 +1,4 @@
-package com.example.bhagwadgita
+package com.connectonmap.bhagwadgita
 
 import io.flutter.embedding.android.FlutterActivity
 
