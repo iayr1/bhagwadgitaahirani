@@ -1,6 +1,5 @@
+import 'package:bhagwadgita/features/chapters/data/models/chapter_model.dart';
 import 'package:flutter/material.dart';
-
-import '../../../chapters/data/models/chapter_model.dart';
 import '../../../core/services/audio_service.dart';
 import '../../../core/services/favorites_service.dart';
 import '../../verse/presentation/pages/verse_detail_page.dart';

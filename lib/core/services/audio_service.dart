@@ -13,7 +13,7 @@ class AudioService {
 
     await _flutterTts.setLanguage('hi-IN');
     await _flutterTts.setPitch(1.0);
-    await _flutterTts.setSpeechRate(0.43);
+    await _flutterTts.setSpeechRate(0.3);
     _initialized = true;
   }
 
