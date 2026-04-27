@@ -3,6 +3,10 @@
         android:label="bhagwadgita"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Google AdMob App ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1429137343095963~6266488079" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
