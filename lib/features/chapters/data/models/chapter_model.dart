@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'chapters/chapter_overview.dart';
 import 'chapters/chapter_sample_verses.dart';
 
@@ -6,6 +7,27 @@ class ChapterModel {
 
   static const Map<int, List<Map<String, String>>> chapterSampleVerses =
       chapterSampleVersesData;
+
+  static const List<Color> chapterColors = [
+    Color(0xFFFF6B00),
+    Color(0xFFFFD700),
+    Color(0xFFE84393),
+    Color(0xFF00C9A7),
+    Color(0xFF845EC2),
+    Color(0xFFFF9671),
+    Color(0xFF0081CF),
+    Color(0xFFFF6F91),
+    Color(0xFFD65DB1),
+    Color(0xFF00C9A7),
+    Color(0xFFFF6B00),
+    Color(0xFFFFD700),
+    Color(0xFF845EC2),
+    Color(0xFFE84393),
+    Color(0xFF0081CF),
+    Color(0xFFFF9671),
+    Color(0xFF00C9A7),
+    Color(0xFFFF6B00),
+  ];
 
   static List<Map<String, String>> sampleVersesForChapter(int chapterNum) {
     return chapterSampleVerses[chapterNum] ?? chapterSampleVerses[1] ?? const [];
